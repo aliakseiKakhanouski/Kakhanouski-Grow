@@ -16,4 +16,10 @@ Write a programm that calculates and prints count of each word which appears in 
 
 #### Task
 
-Write unit tests for utility classes.
+Write unit tests using JUnit + Mockito/EasyMock.
+
+#### Task Details
+
+- Refactor existing utility classes: let's make them plain classes without static methods.
+- Map 'service' class must contain intance of a File 'service' class.
+- Map 'service' class must do the same: take name of a file, delegate data reading to File 'service', proceed data, return resutl.
