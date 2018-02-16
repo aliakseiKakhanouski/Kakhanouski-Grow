@@ -1,8 +1,8 @@
 package com.epam.grow;
 
-import com.epam.grow.util.MapUtils;
-import com.epam.grow.util.FileUtils;
-import com.epam.grow.util.Order;
+import com.epam.grow.service.MapService;
+import com.epam.grow.service.FileService;
+import com.epam.grow.service.Order;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -19,12 +19,13 @@ public class Main {
 
     public static void main(String[] args) {
         readParam(args);
+        MapService mapService = new MapService();
         if (path == null) {
             return;
         }
         Map<String, Long> map = Collections.emptyMap();
         try {
-            map = MapUtils.convertListToMap(FileUtils.readFromFile(path));
+            map = mapService.calculateWords(path);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,7 +33,7 @@ public class Main {
         if (order.equals(Order.NONE)) {
             System.out.println(map);
         } else {
-            System.out.println(MapUtils.sortedMapWithLambda(map, order));
+            System.out.println(mapService.sortMap(map, order));
         }
     }
 
