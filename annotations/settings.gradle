@@ -1,0 +1,3 @@
+rootProject.name = 'annotations'
+include ':domain'
+include ':service'
