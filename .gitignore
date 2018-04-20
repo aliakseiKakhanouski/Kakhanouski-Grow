@@ -3,8 +3,10 @@
 *.iws
 *.ipr
 .idea
+*.txt
 out
 fileTemplates
 build
 bin
 target
+.gradle

@@ -1,0 +1,14 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = "${javaVersion}"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile "javassist:javassist:${javassistVersion}"
+    compile "log4j:log4j:1.2.17"
+}
