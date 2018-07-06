@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--1. Configure beans using xml -->
+    <!--2. Use different bean scope (singleton, prototype) -->
+    <bean id="singletonDeveloper" class="com.epam.grow.task1.domain.Developer">
+        <property name="name" value="Vanya"/>
+        <property name="level" value="1"/>
+        <property name="skill" value="Java"/>
+    </bean>
+    <bean id="prototypeDeveloper" class="com.epam.grow.task1.domain.Developer" scope="prototype">
+        <property name="name" value="Vanya"/>
+        <property name="level" value="2"/>
+        <property name="skill" value="Java"/>
+    </bean>
+
+    <!--3. Use factory-method (singleton) and factory-bean (service locator), implement FactoryBean interface -->
+    <!--Use factory-method (singleton)-->
+    <bean id="developerFactory" class="com.epam.grow.task2.domain.DeveloperFactory"/>
+    <bean id="firstDeveloper" class="com.epam.grow.task1.domain.Developer" factory-bean="developerFactory" factory-method="getDeveloper"/>
+    <!--Factory-bean (service locator)-->
+    <bean id="descriptionServiceFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+        <property name="serviceLocatorInterface" value="com.epam.grow.task2.domain.DescriptionServiceFactory"/>
+    </bean>
+
+    <!--Implement FactoryBean interface -->
+    <bean id="developerFactoryBean" class="com.epam.grow.task2.domain.DeveloperFactoryBean">
+        <constructor-arg value="Vanya"/>
+        <constructor-arg value="2"/>
+        <constructor-arg value="Java"/>
+    </bean>
+
+    <!--4. Pass bean references, string constants and primitive types as constructor parameters via xml configuration -->
+    <bean id="description" class="com.epam.grow.task2.domain.Description">
+        <constructor-arg ref="singletonDeveloper"/>
+        <constructor-arg value="5"/>
+        <constructor-arg index="2">
+            <util:constant static-field="com.epam.grow.task2.domain.Description.JUNIOR"/>
+        </constructor-arg>
+    </bean>
+
+    <!--5. Use setter approach for passing bean parameters -->
+    <bean id="developer" class="com.epam.grow.task1.domain.Developer" scope="prototype">
+        <property name="name" value="Vanya"/>
+        <property name="level" value="3"/>
+        <property name="skill" value="Java"/>
+    </bean>
+
+    <!--6. Divide complex xml configs into a few simple -->
+    <import resource="application-context-part-two.xml"/>
+
+</beans>

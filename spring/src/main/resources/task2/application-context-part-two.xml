@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--7. Implement bean which sets property username="Awesome" in spring context -->
+    <bean id="awesomeDeveloper" class="com.epam.grow.task1.domain.Developer" scope="prototype">
+        <property name="name" value="Awesome"/>
+        <property name="level" value="4"/>
+        <property name="skill" value="Java"/>
+    </bean>
+
+    <!--8. Implement bean that sends message to log at initialization and destroy phases -->
+    <bean id="lifeCycleBean" class="com.epam.grow.task1.domain.Lifecycle" lazy-init="true" init-method="init" destroy-method="destroy"/>
+
+</beans>

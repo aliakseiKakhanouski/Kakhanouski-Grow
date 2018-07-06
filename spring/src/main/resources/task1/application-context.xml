@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--1. Create bean A, use DI via setters, use property placeholder for values-->
+    <bean id="dev" class="com.epam.grow.task1.domain.Developer">
+        <property name="name" value="Vanya"/>
+        <property name="level" value="1"/>
+        <property name="skill" value="Java"/>
+    </bean>
+
+    <bean id="lead" class="com.epam.grow.task1.domain.Developer">
+        <property name="name" value="Ivan"/>
+        <property name="level" value="4"/>
+        <property name="skill" value="Java"/>
+    </bean>
+
+    <!--2. Create bean B, use DI via constructor (bean A as argument of constructor)-->
+    <bean id="project" class="com.epam.grow.task1.domain.Project">
+        <constructor-arg value="GROW"/>
+        <constructor-arg ref="lead"/>
+    </bean>
+
+    <!--3. Create bean C with singleton scope and bean D with prototype scope. We need to add bean D as property of bean C.
+    Pay attention that they have different scopes. Consider Lookup Method Injection.-->
+    <bean id="projectNotification" class="com.epam.grow.task1.domain.ProjectNotification" scope="prototype">
+        <constructor-arg value="Notification!!!"/>
+    </bean>
+
+    <bean id="projectWithNotification" class="com.epam.grow.task1.domain.Project" lazy-init="true">
+        <constructor-arg value="projectWithNotification"/>
+        <constructor-arg ref="dev"/>
+        <lookup-method name="getProjectNotification" bean="projectNotification"/>
+    </bean>
+
+    <!--4. Create bean E and replace logic of one of his method by Method Replacement-->
+    <bean id="replacer" class="com.epam.grow.task1.domain.Replacer"/>
+
+    <bean id="projectWithReplacer" class="com.epam.grow.task1.domain.Project" lazy-init="true">
+        <constructor-arg value="projectWithReplacer"/>
+        <constructor-arg ref="dev"/>
+        <replaced-method name="toString" replacer="replacer"/>
+    </bean>
+
+    <!--5. Create bean F and log all possible steps from his lifecycle (lifecycle of Spring bean)-->
+    <bean id="lifecycleBPP" class="com.epam.grow.task1.domain.LifecycleBPP"/>
+
+    <bean id="lifecycle" class="com.epam.grow.task1.domain.Lifecycle" init-method="init" destroy-method="destroy" lazy-init="true">
+        <property name="project" ref="project"/>
+    </bean>
+</beans>
